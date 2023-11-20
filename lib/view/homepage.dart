@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/riverpod_as_solution/provider_weather.dart';
 
 class HomePage extends ConsumerWidget {
@@ -55,12 +56,12 @@ class HomePage extends ConsumerWidget {
                         width: 70,
                       ),
                       Text(
-                        "${(data.list[1].main.temp - 273.15).toStringAsFixed(2)}°C",
-                        style: const TextStyle(
-                          fontSize: 50,
-                          color: Colors.white,
-                        ),
-                      ),
+                          "${(data.list[1].main.temp - 273.15).toStringAsFixed(2)}°C",
+                          style: GoogleFonts.ptSans(
+                            fontSize: 50,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          )),
                       Text(
                         "Feels like  ${(data.list[1].main.feelsLike - 273.15).toStringAsFixed(2)}°C",
                         style: const TextStyle(
