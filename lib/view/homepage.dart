@@ -55,10 +55,17 @@ class HomePage extends ConsumerWidget {
                         width: 70,
                       ),
                       Text(
-                        "${data.list[0].main.temp.toString()}°K",
+                        "${(data.list[1].main.temp - 273.15).toStringAsFixed(2)}°C",
                         style: const TextStyle(
                           fontSize: 50,
                           color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        "Feels like  ${(data.list[1].main.feelsLike - 273.15).toStringAsFixed(2)}°C",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
                         ),
                       ),
                       Text(
@@ -69,187 +76,93 @@ class HomePage extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(
-                        height: 90,
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Wind Speed : ${data.list[0].wind.speed.toString()} mb",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            Text(
+                              "Humidity : ${data.list[0].main.humidity.toString()}°C",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            Text(
+                              "Pressure : ${data.list[0].main.pressure.toString()}Kwp",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 70,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 20,
-                          ),
-                          width: MediaQuery.sizeOf(context).width,
-                          height: MediaQuery.sizeOf(context).height / 2.5,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff6AA6E5),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Latitude",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 20,
+                            ),
+                            width: MediaQuery.sizeOf(context).width,
+                            height: MediaQuery.sizeOf(context).height / 2.8,
+                            decoration: BoxDecoration(
+                              color: const Color(0xff6AA6E5),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: ListView.separated(
+                                itemBuilder: (context, index) {
+                                  final temp = data.list[index].main.temp;
+                                  int weather = 280;
+                                  return ListTile(
+                                    title: Text(
+                                      "${data.list[index].dtTxt.hour}:${data.list[index].dtTxt.minute}${data.list[index].dtTxt.minute}:${data.list[index].dtTxt.second}${data.list[index].dtTxt.millisecond}",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    "${data.city.coord.lat.toString()}°",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
+                                    leading: weather <= temp
+                                        ? const Icon(
+                                            Icons.cloud,
+                                            color: Colors.white,
+                                          )
+                                        : const Icon(
+                                            Icons.sunny,
+                                            color: Colors.white,
+                                          ),
+                                    trailing: Text(
+                                      data.list[index].main.temp.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Longitude",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
+                                  );
+                                },
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(
+                                      height: 15,
                                     ),
-                                  ),
-                                  Text(
-                                    "${data.city.coord.lon.toString()}°",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Humidity",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${data.list[0].main.humidity.toString()}%",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Pressure",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${data.list[0].main.pressure.toString()} mb",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Wind Speed",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${data.list[0].wind.speed.toString()} Kph",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Wind Gust",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${data.list[0].wind.gust.toString()} mg",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Sea Level",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${data.list[0].main.seaLevel.toString()} masl",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Ground Level",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${data.list[0].main.grndLevel.toString()} masl",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
+                                itemCount: 8)),
                       )
                     ],
                   ),
