@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:weather_app/view/homepage.dart';
-import 'package:weather_app/view/mainpage.dart';
+import 'package:weather_app/view/homepage.dart';
+// import 'package:weather_app/view/mainpage.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const HomePage(),
     );
   }
 }
